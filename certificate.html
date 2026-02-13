@@ -1,0 +1,572 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Certificates - Websprout Hub</title>
+    
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700;800&family=Syne:wght@600;700;800&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --primary: #6366f1;
+            --primary-dark: #4f46e5;
+            --secondary: #ec4899;
+            --accent: #10b981;
+            --dark: #0f172a;
+            --light: #f1f5f9;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Outfit', sans-serif;
+            overflow-x: hidden;
+        }
+        
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Syne', sans-serif;
+        }
+        
+        html {
+            scroll-behavior: smooth;
+        }
+        
+        /* Navigation Styles */
+        nav {
+            backdrop-filter: blur(10px);
+            background: rgba(15, 23, 42, 0.95);
+        }
+        
+        .nav-link {
+            position: relative;
+            transition: color 0.3s ease;
+        }
+        
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--secondary);
+            transition: width 0.3s ease;
+        }
+        
+        .nav-link:hover::after {
+            width: 100%;
+        }
+        
+        /* Button Styles */
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .btn-primary::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, var(--secondary), var(--primary));
+            transition: left 0.3s ease;
+        }
+        
+        .btn-primary:hover::before {
+            left: 0;
+        }
+        
+        .btn-primary span {
+            position: relative;
+            z-index: 1;
+        }
+        
+        /* Mobile Menu */
+        .mobile-menu {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+        }
+        
+        .mobile-menu.active {
+            max-height: 500px;
+        }
+        
+        /* Certificate Card */
+        .certificate-preview {
+            background: linear-gradient(135deg, #fff 0%, #f8fafc 100%);
+            border: 3px solid #e2e8f0;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .certificate-preview::before {
+            content: '';
+            position: absolute;
+            top: -2px;
+            left: -2px;
+            right: -2px;
+            bottom: -2px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            z-index: -1;
+            border-radius: inherit;
+        }
+        
+        /* Fade In Animation */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(30px);
+            animation: fadeInUp 0.8s ease forwards;
+        }
+        
+        @keyframes fadeInUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .delay-1 { animation-delay: 0.1s; }
+        .delay-2 { animation-delay: 0.2s; }
+        .delay-3 { animation-delay: 0.3s; }
+        .delay-4 { animation-delay: 0.4s; }
+        
+        /* Shimmer Effect */
+        @keyframes shimmer {
+            0% { background-position: -1000px 0; }
+            100% { background-position: 1000px 0; }
+        }
+        
+        .shimmer {
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+            background-size: 1000px 100%;
+            animation: shimmer 3s infinite;
+        }
+    </style>
+</head>
+<body class="bg-slate-50">
+    
+    <!-- Navigation Bar -->
+    <nav class="fixed w-full top-0 z-50 shadow-lg">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex items-center">
+                    <a href="index.html" class="flex items-center space-x-2">
+                        <div class="w-10 h-10 bg-gradient-to-br from-indigo-500 to-pink-500 rounded-lg flex items-center justify-center">
+                            <span class="text-white font-bold text-xl">W</span>
+                        </div>
+                        <span class="text-white font-bold text-xl hidden sm:block">Websprout Hub</span>
+                    </a>
+                </div>
+                
+                <div class="hidden md:flex space-x-8">
+                    <a href="index.html" class="nav-link text-white font-medium">Home</a>
+                    <a href="courses.html" class="nav-link text-white font-medium">Courses</a>
+                    <a href="about.html" class="nav-link text-white font-medium">About</a>
+                    <a href="certificate.html" class="nav-link text-white font-medium">Certificates</a>
+                    <a href="register.html" class="btn-primary px-6 py-2 rounded-full text-white font-semibold">
+                        <span>Register Now</span>
+                    </a>
+                </div>
+                
+                <button id="mobileMenuBtn" class="md:hidden text-white focus:outline-none">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                    </svg>
+                </button>
+            </div>
+            
+            <div id="mobileMenu" class="mobile-menu md:hidden">
+                <div class="px-2 pt-2 pb-3 space-y-1">
+                    <a href="index.html" class="block px-3 py-2 text-white hover:bg-slate-700 rounded-md">Home</a>
+                    <a href="courses.html" class="block px-3 py-2 text-white hover:bg-slate-700 rounded-md">Courses</a>
+                    <a href="about.html" class="block px-3 py-2 text-white hover:bg-slate-700 rounded-md">About</a>
+                    <a href="certificate.html" class="block px-3 py-2 text-white hover:bg-slate-700 rounded-md">Certificates</a>
+                    <a href="register.html" class="block px-3 py-2 bg-pink-500 text-white rounded-md text-center font-semibold">Register Now</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+    
+    <!-- Hero Section -->
+    <section class="pt-32 pb-16 bg-gradient-to-br from-indigo-600 via-purple-600 to-pink-500">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <div class="fade-in delay-1">
+                <div class="text-6xl mb-6">🏆</div>
+                <h1 class="text-5xl md:text-6xl font-bold text-white mb-6">
+                    Earn Recognized Certificates
+                </h1>
+                <p class="text-xl md:text-2xl text-white/90 max-w-3xl mx-auto">
+                    Every course completion earns you an official certificate to showcase your new skills
+                </p>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Certificate Preview Section -->
+    <section class="py-20 bg-white">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+            
+            <div class="certificate-preview rounded-2xl p-8 md:p-12 shadow-2xl fade-in delay-2">
+                <div class="text-center">
+                    
+                    <!-- Decorative Header -->
+                    <div class="mb-8">
+                        <div class="flex justify-center items-center gap-4 mb-4">
+                            <div class="w-16 h-1 bg-gradient-to-r from-transparent via-indigo-500 to-transparent"></div>
+                            <div class="text-4xl">🎓</div>
+                            <div class="w-16 h-1 bg-gradient-to-r from-transparent via-pink-500 to-transparent"></div>
+                        </div>
+                        <h2 class="text-3xl md:text-4xl font-bold text-slate-900 mb-2">Certificate of Completion</h2>
+                        <p class="text-slate-600">Websprout Hub Digital Skills Program</p>
+                    </div>
+                    
+                    <!-- Certificate Body -->
+                    <div class="max-w-2xl mx-auto mb-8">
+                        <p class="text-lg text-slate-700 mb-6">This certifies that</p>
+                        <h3 class="text-4xl md:text-5xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-indigo-600 to-pink-600 mb-6">
+                            [Your Name]
+                        </h3>
+                        <p class="text-lg text-slate-700 mb-4">has successfully completed the</p>
+                        <h4 class="text-2xl md:text-3xl font-bold text-slate-900 mb-6">
+                            [Course Name]
+                        </h4>
+                        <p class="text-slate-600 mb-8">
+                            demonstrating proficiency in practical digital skills and achieving all learning objectives
+                        </p>
+                    </div>
+                    
+                    <!-- Signature Section -->
+                    <div class="grid md:grid-cols-2 gap-8 max-w-xl mx-auto mb-6">
+                        <div>
+                            <div class="h-16 flex items-end justify-center mb-2">
+                                <div class="border-t-2 border-slate-400 w-40"></div>
+                            </div>
+                            <p class="text-sm font-semibold text-slate-700">Director's Signature</p>
+                            <p class="text-xs text-slate-500">Websprout Hub</p>
+                        </div>
+                        <div>
+                            <div class="h-16 flex items-end justify-center mb-2">
+                                <div class="border-t-2 border-slate-400 w-40"></div>
+                            </div>
+                            <p class="text-sm font-semibold text-slate-700">Date of Completion</p>
+                            <p class="text-xs text-slate-500">Certificate ID: WH-XXXX-XXXX</p>
+                        </div>
+                    </div>
+                    
+                    <!-- Footer -->
+                    <div class="pt-6 border-t border-slate-200">
+                        <p class="text-xs text-slate-500">
+                            Websprout Hub | Kaduna, Nigeria | limscobeauty18@gmail.com
+                        </p>
+                    </div>
+                    
+                </div>
+            </div>
+            
+            <p class="text-center text-slate-600 mt-8 italic fade-in delay-3">
+                * This is a preview. Actual certificates include unique IDs and digital signatures.
+            </p>
+            
+        </div>
+    </section>
+    
+    <!-- Certificate Benefits -->
+    <section class="py-20 bg-slate-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            
+            <div class="text-center mb-16">
+                <h2 class="text-4xl md:text-5xl font-bold text-slate-900 mb-4">
+                    Why Our Certificates Matter
+                </h2>
+                <p class="text-xl text-slate-600 max-w-3xl mx-auto">
+                    More than just a piece of paper — it's proof of your dedication and skills
+                </p>
+            </div>
+            
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                
+                <!-- Benefit 1 -->
+                <div class="bg-white p-8 rounded-2xl shadow-lg">
+                    <div class="text-5xl mb-4">💼</div>
+                    <h3 class="text-2xl font-bold text-slate-900 mb-3">Boost Your CV</h3>
+                    <p class="text-slate-600">
+                        Stand out to employers by showcasing verified digital skills on your resume and LinkedIn profile
+                    </p>
+                </div>
+                
+                <!-- Benefit 2 -->
+                <div class="bg-white p-8 rounded-2xl shadow-lg">
+                    <div class="text-5xl mb-4">✓</div>
+                    <h3 class="text-2xl font-bold text-slate-900 mb-3">Verified Credentials</h3>
+                    <p class="text-slate-600">
+                        Each certificate includes a unique ID that employers can verify for authenticity
+                    </p>
+                </div>
+                
+                <!-- Benefit 3 -->
+                <div class="bg-white p-8 rounded-2xl shadow-lg">
+                    <div class="text-5xl mb-4">🌍</div>
+                    <h3 class="text-2xl font-bold text-slate-900 mb-3">Globally Recognized</h3>
+                    <p class="text-slate-600">
+                        Our certificates demonstrate practical skills valued by companies worldwide
+                    </p>
+                </div>
+                
+                <!-- Benefit 4 -->
+                <div class="bg-white p-8 rounded-2xl shadow-lg">
+                    <div class="text-5xl mb-4">📱</div>
+                    <h3 class="text-2xl font-bold text-slate-900 mb-3">Digital & Shareable</h3>
+                    <p class="text-slate-600">
+                        Receive both PDF and digital versions you can easily share on social media
+                    </p>
+                </div>
+                
+                <!-- Benefit 5 -->
+                <div class="bg-white p-8 rounded-2xl shadow-lg">
+                    <div class="text-5xl mb-4">🎯</div>
+                    <h3 class="text-2xl font-bold text-slate-900 mb-3">Skills Validation</h3>
+                    <p class="text-slate-600">
+                        Proves you completed hands-on projects and mastered real-world applications
+                    </p>
+                </div>
+                
+                <!-- Benefit 6 -->
+                <div class="bg-white p-8 rounded-2xl shadow-lg">
+                    <div class="text-5xl mb-4">🚀</div>
+                    <h3 class="text-2xl font-bold text-slate-900 mb-3">Career Advancement</h3>
+                    <p class="text-slate-600">
+                        Open doors to freelance opportunities, remote work, and tech career paths
+                    </p>
+                </div>
+                
+            </div>
+        </div>
+    </section>
+    
+    <!-- How to Get Certified -->
+    <section class="py-20 bg-white">
+        <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+            
+            <div class="text-center mb-16">
+                <h2 class="text-4xl md:text-5xl font-bold text-slate-900 mb-4">
+                    How to Earn Your Certificate
+                </h2>
+                <p class="text-xl text-slate-600">
+                    Follow these simple steps to receive your official certificate
+                </p>
+            </div>
+            
+            <div class="space-y-8">
+                
+                <!-- Step 1 -->
+                <div class="flex gap-6 items-start">
+                    <div class="flex-shrink-0 w-16 h-16 bg-gradient-to-br from-indigo-500 to-purple-600 text-white rounded-full flex items-center justify-center text-2xl font-bold">
+                        1
+                    </div>
+                    <div class="flex-grow">
+                        <h3 class="text-2xl font-bold text-slate-900 mb-2">Enroll in a Course</h3>
+                        <p class="text-slate-600">
+                            Choose any of our 10 courses and complete your registration through our website
+                        </p>
+                    </div>
+                </div>
+                
+                <!-- Step 2 -->
+                <div class="flex gap-6 items-start">
+                    <div class="flex-shrink-0 w-16 h-16 bg-gradient-to-br from-purple-500 to-pink-600 text-white rounded-full flex items-center justify-center text-2xl font-bold">
+                        2
+                    </div>
+                    <div class="flex-grow">
+                        <h3 class="text-2xl font-bold text-slate-900 mb-2">Complete All Lessons</h3>
+                        <p class="text-slate-600">
+                            Attend all sessions, complete assignments, and finish your final project with passing grades
+                        </p>
+                    </div>
+                </div>
+                
+                <!-- Step 3 -->
+                <div class="flex gap-6 items-start">
+                    <div class="flex-shrink-0 w-16 h-16 bg-gradient-to-br from-pink-500 to-rose-600 text-white rounded-full flex items-center justify-center text-2xl font-bold">
+                        3
+                    </div>
+                    <div class="flex-grow">
+                        <h3 class="text-2xl font-bold text-slate-900 mb-2">Pass the Assessment</h3>
+                        <p class="text-slate-600">
+                            Demonstrate your skills through a practical project or assessment evaluated by our instructors
+                        </p>
+                    </div>
+                </div>
+                
+                <!-- Step 4 -->
+                <div class="flex gap-6 items-start">
+                    <div class="flex-shrink-0 w-16 h-16 bg-gradient-to-br from-green-500 to-emerald-600 text-white rounded-full flex items-center justify-center text-2xl font-bold">
+                        4
+                    </div>
+                    <div class="flex-grow">
+                        <h3 class="text-2xl font-bold text-slate-900 mb-2">Receive Your Certificate</h3>
+                        <p class="text-slate-600">
+                            Get your official Websprout Hub certificate via email in PDF format, ready to share!
+                        </p>
+                    </div>
+                </div>
+                
+            </div>
+            
+        </div>
+    </section>
+    
+    <!-- CTA Section -->
+    <section class="py-20 bg-gradient-to-br from-indigo-600 via-purple-600 to-pink-500">
+        <div class="max-w-4xl mx-auto text-center px-4">
+            <h2 class="text-4xl md:text-5xl font-bold text-white mb-6">
+                Ready to Earn Your Certificate?
+            </h2>
+            <p class="text-xl text-white/90 mb-8">
+                Join thousands of Nigerian youths who have certified their digital skills with Websprout Hub
+            </p>
+            <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                <a href="register.html" class="inline-block bg-white text-indigo-600 px-10 py-4 rounded-full font-bold text-lg hover:shadow-2xl transition transform hover:scale-105">
+                    Register for a Course
+                </a>
+                <a href="courses.html" class="inline-block bg-pink-500 text-white px-10 py-4 rounded-full font-bold text-lg hover:bg-pink-600 transition">
+                    Browse Courses
+                </a>
+            </div>
+        </div>
+    </section>
+    
+    <!-- FAQ Section -->
+    <section class="py-20 bg-white">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+            
+            <div class="text-center mb-16">
+                <h2 class="text-4xl md:text-5xl font-bold text-slate-900 mb-4">
+                    Certificate FAQs
+                </h2>
+            </div>
+            
+            <div class="space-y-6">
+                
+                <div class="bg-slate-50 p-6 rounded-xl">
+                    <h3 class="text-xl font-bold text-slate-900 mb-2">
+                        Are the certificates free?
+                    </h3>
+                    <p class="text-slate-600">
+                        Yes! Every student who completes a course receives a certificate at no additional cost.
+                    </p>
+                </div>
+                
+                <div class="bg-slate-50 p-6 rounded-xl">
+                    <h3 class="text-xl font-bold text-slate-900 mb-2">
+                        How long does it take to receive my certificate?
+                    </h3>
+                    <p class="text-slate-600">
+                        Certificates are issued within 3-5 business days after course completion and assessment approval.
+                    </p>
+                </div>
+                
+                <div class="bg-slate-50 p-6 rounded-xl">
+                    <h3 class="text-xl font-bold text-slate-900 mb-2">
+                        Can employers verify my certificate?
+                    </h3>
+                    <p class="text-slate-600">
+                        Yes! Each certificate has a unique ID that can be verified by contacting us via email or phone.
+                    </p>
+                </div>
+                
+                <div class="bg-slate-50 p-6 rounded-xl">
+                    <h3 class="text-xl font-bold text-slate-900 mb-2">
+                        What format will I receive my certificate in?
+                    </h3>
+                    <p class="text-slate-600">
+                        You'll receive a high-resolution PDF certificate that you can print or share digitally on LinkedIn, social media, or your portfolio.
+                    </p>
+                </div>
+                
+            </div>
+            
+        </div>
+    </section>
+    
+    <!-- Footer -->
+    <footer class="bg-slate-900 text-white py-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid md:grid-cols-4 gap-8">
+                <div>
+                    <h4 class="text-xl font-bold mb-4">Websprout Hub</h4>
+                    <p class="text-slate-400">Empowering youths with practical tech and AI skills for the digital future.</p>
+                </div>
+                
+                <div>
+                    <h4 class="text-xl font-bold mb-4">Quick Links</h4>
+                    <ul class="space-y-2">
+                        <li><a href="index.html" class="text-slate-400 hover:text-white transition">Home</a></li>
+                        <li><a href="courses.html" class="text-slate-400 hover:text-white transition">Courses</a></li>
+                        <li><a href="about.html" class="text-slate-400 hover:text-white transition">About Us</a></li>
+                        <li><a href="certificate.html" class="text-slate-400 hover:text-white transition">Certificates</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h4 class="text-xl font-bold mb-4">Contact Us</h4>
+                    <ul class="space-y-2 text-slate-400">
+                        <li>📧 limscobeauty18@gmail.com</li>
+                        <li>📱 +234 704 911 1844</li>
+                        <li>📱 +234 901 441 3890</li>
+                        <li>📍 Online (Remote)</li>
+                        <li>Kaduna State, Nigeria</li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h4 class="text-xl font-bold mb-4">Follow Us</h4>
+                    <ul class="space-y-2">
+                        <li><a href="https://t.me/+3Xu_nkU9FkRkYWE0" target="_blank" class="text-slate-400 hover:text-white transition">💬 Telegram Community</a></li>
+                        <li><a href="https://instagram.com/misspoet_18" target="_blank" class="text-slate-400 hover:text-white transition">📷 Instagram: @misspoet_18</a></li>
+                        <li><a href="https://youtube.com/@misspoet_18" target="_blank" class="text-slate-400 hover:text-white transition">🎥 YouTube: misspoet_18</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="border-t border-slate-800 mt-8 pt-8 text-center text-slate-400">
+                <p>&copy; 2024 Websprout Hub. All rights reserved. Made with 💜 for Nigerian Youth.</p>
+            </div>
+        </div>
+    </footer>
+    
+    <!-- JavaScript -->
+    <script>
+        // Mobile Menu Toggle
+        const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+        const mobileMenu = document.getElementById('mobileMenu');
+        
+        mobileMenuBtn.addEventListener('click', () => {
+            mobileMenu.classList.toggle('active');
+        });
+        
+        // Close mobile menu when clicking a link
+        const mobileLinks = mobileMenu.querySelectorAll('a');
+        mobileLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                mobileMenu.classList.remove('active');
+            });
+        });
+    </script>
+</body>
+</html>

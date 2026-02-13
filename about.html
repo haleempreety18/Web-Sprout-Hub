@@ -1,0 +1,555 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Us - Websprout Hub</title>
+    
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700;800&family=Syne:wght@600;700;800&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --primary: #6366f1;
+            --primary-dark: #4f46e5;
+            --secondary: #ec4899;
+            --accent: #10b981;
+            --dark: #0f172a;
+            --light: #f1f5f9;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Outfit', sans-serif;
+            overflow-x: hidden;
+        }
+        
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Syne', sans-serif;
+        }
+        
+        html {
+            scroll-behavior: smooth;
+        }
+        
+        /* Navigation Styles */
+        nav {
+            backdrop-filter: blur(10px);
+            background: rgba(15, 23, 42, 0.95);
+        }
+        
+        .nav-link {
+            position: relative;
+            transition: color 0.3s ease;
+        }
+        
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--secondary);
+            transition: width 0.3s ease;
+        }
+        
+        .nav-link:hover::after {
+            width: 100%;
+        }
+        
+        /* Button Styles */
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .btn-primary::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, var(--secondary), var(--primary));
+            transition: left 0.3s ease;
+        }
+        
+        .btn-primary:hover::before {
+            left: 0;
+        }
+        
+        .btn-primary span {
+            position: relative;
+            z-index: 1;
+        }
+        
+        /* Mobile Menu */
+        .mobile-menu {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+        }
+        
+        .mobile-menu.active {
+            max-height: 500px;
+        }
+        
+        /* Fade In Animation */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(30px);
+            animation: fadeInUp 0.8s ease forwards;
+        }
+        
+        @keyframes fadeInUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .delay-1 { animation-delay: 0.1s; }
+        .delay-2 { animation-delay: 0.2s; }
+        .delay-3 { animation-delay: 0.3s; }
+        .delay-4 { animation-delay: 0.4s; }
+        
+        /* Card Hover Effect */
+        .value-card {
+            transition: all 0.3s ease;
+        }
+        
+        .value-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 40px rgba(99, 102, 241, 0.2);
+        }
+    </style>
+</head>
+<body class="bg-slate-50">
+    
+    <!-- Navigation Bar -->
+    <nav class="fixed w-full top-0 z-50 shadow-lg">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex items-center">
+                    <a href="index.html" class="flex items-center space-x-2">
+                        <div class="w-10 h-10 bg-gradient-to-br from-indigo-500 to-pink-500 rounded-lg flex items-center justify-center">
+                            <span class="text-white font-bold text-xl">W</span>
+                        </div>
+                        <span class="text-white font-bold text-xl hidden sm:block">Websprout Hub</span>
+                    </a>
+                </div>
+                
+                <div class="hidden md:flex space-x-8">
+                    <a href="index.html" class="nav-link text-white font-medium">Home</a>
+                    <a href="courses.html" class="nav-link text-white font-medium">Courses</a>
+                    <a href="about.html" class="nav-link text-white font-medium">About</a>
+                    <a href="certificate.html" class="nav-link text-white font-medium">Certificates</a>
+                    <a href="register.html" class="btn-primary px-6 py-2 rounded-full text-white font-semibold">
+                        <span>Register Now</span>
+                    </a>
+                </div>
+                
+                <button id="mobileMenuBtn" class="md:hidden text-white focus:outline-none">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                    </svg>
+                </button>
+            </div>
+            
+            <div id="mobileMenu" class="mobile-menu md:hidden">
+                <div class="px-2 pt-2 pb-3 space-y-1">
+                    <a href="index.html" class="block px-3 py-2 text-white hover:bg-slate-700 rounded-md">Home</a>
+                    <a href="courses.html" class="block px-3 py-2 text-white hover:bg-slate-700 rounded-md">Courses</a>
+                    <a href="about.html" class="block px-3 py-2 text-white hover:bg-slate-700 rounded-md">About</a>
+                    <a href="certificate.html" class="block px-3 py-2 text-white hover:bg-slate-700 rounded-md">Certificates</a>
+                    <a href="register.html" class="block px-3 py-2 bg-pink-500 text-white rounded-md text-center font-semibold">Register Now</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+    
+    <!-- Hero Section -->
+    <section class="pt-32 pb-16 bg-gradient-to-br from-indigo-600 via-purple-600 to-pink-500">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <div class="fade-in delay-1">
+                <h1 class="text-5xl md:text-6xl font-bold text-white mb-6">
+                    About Websprout Hub
+                </h1>
+                <p class="text-xl md:text-2xl text-white/90 max-w-3xl mx-auto">
+                    Building Nigeria's next generation of tech leaders, one student at a time
+                </p>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Our Story Section -->
+    <section class="py-20 bg-white">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+            
+            <div class="text-center mb-12 fade-in delay-1">
+                <h2 class="text-4xl md:text-5xl font-bold text-slate-900 mb-6">
+                    Our Story
+                </h2>
+            </div>
+            
+            <div class="prose prose-lg max-w-none fade-in delay-2">
+                <p class="text-xl text-slate-700 leading-relaxed mb-6">
+                    Websprout Hub is a youth-focused digital skills community dedicated to empowering young people with practical, in-demand tech skills. We believe that every young Nigerian deserves access to quality tech education, regardless of their location or financial background.
+                </p>
+                
+                <p class="text-xl text-slate-700 leading-relaxed mb-6">
+                    We provide hands-on training in web development, cybersecurity, AI tools, data analytics, content creation, design, and digital marketing — helping youths gain real-world experience, confidence, and career opportunities.
+                </p>
+                
+                <p class="text-xl text-slate-700 leading-relaxed">
+                    Our programs are delivered 100% online, making learning accessible to students across Nigeria and beyond. Every completed course comes with a certificate of participation to showcase your new skills.
+                </p>
+            </div>
+            
+        </div>
+    </section>
+    
+    <!-- Mission & Vision Section -->
+    <section class="py-20 bg-slate-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            
+            <div class="grid md:grid-cols-2 gap-12">
+                
+                <!-- Mission -->
+                <div class="bg-white p-8 rounded-2xl shadow-lg fade-in delay-1">
+                    <div class="text-5xl mb-4">🎯</div>
+                    <h3 class="text-3xl font-bold text-slate-900 mb-4">Our Mission</h3>
+                    <p class="text-lg text-slate-600 leading-relaxed">
+                        To empower Nigerian youths with practical tech and AI skills that enable them to thrive in the digital economy, build successful careers, and create innovative solutions to real-world problems.
+                    </p>
+                </div>
+                
+                <!-- Vision -->
+                <div class="bg-white p-8 rounded-2xl shadow-lg fade-in delay-2">
+                    <div class="text-5xl mb-4">👁️</div>
+                    <h3 class="text-3xl font-bold text-slate-900 mb-4">Our Vision</h3>
+                    <p class="text-lg text-slate-600 leading-relaxed">
+                        To become Nigeria's leading youth tech community, producing thousands of skilled professionals who drive technological innovation and economic growth across Africa and beyond.
+                    </p>
+                </div>
+                
+            </div>
+        </div>
+    </section>
+    
+    <!-- Core Values Section -->
+    <section class="py-20 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            
+            <div class="text-center mb-16">
+                <h2 class="text-4xl md:text-5xl font-bold text-slate-900 mb-4">
+                    Our Core Values
+                </h2>
+                <p class="text-xl text-slate-600">
+                    The principles that guide everything we do
+                </p>
+            </div>
+            
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                
+                <!-- Value 1 -->
+                <div class="value-card bg-gradient-to-br from-indigo-50 to-purple-50 p-8 rounded-2xl shadow-md">
+                    <div class="text-5xl mb-4">💡</div>
+                    <h3 class="text-2xl font-bold text-slate-900 mb-3">Innovation</h3>
+                    <p class="text-slate-600">
+                        We embrace new technologies and creative approaches to learning, always staying ahead of industry trends.
+                    </p>
+                </div>
+                
+                <!-- Value 2 -->
+                <div class="value-card bg-gradient-to-br from-pink-50 to-rose-50 p-8 rounded-2xl shadow-md">
+                    <div class="text-5xl mb-4">🤝</div>
+                    <h3 class="text-2xl font-bold text-slate-900 mb-3">Community</h3>
+                    <p class="text-slate-600">
+                        We build supportive networks where learners help each other grow, share knowledge, and celebrate wins together.
+                    </p>
+                </div>
+                
+                <!-- Value 3 -->
+                <div class="value-card bg-gradient-to-br from-green-50 to-emerald-50 p-8 rounded-2xl shadow-md">
+                    <div class="text-5xl mb-4">🎓</div>
+                    <h3 class="text-2xl font-bold text-slate-900 mb-3">Excellence</h3>
+                    <p class="text-slate-600">
+                        We maintain high standards in our curriculum, instruction, and student support to ensure quality outcomes.
+                    </p>
+                </div>
+                
+                <!-- Value 4 -->
+                <div class="value-card bg-gradient-to-br from-yellow-50 to-orange-50 p-8 rounded-2xl shadow-md">
+                    <div class="text-5xl mb-4">🌍</div>
+                    <h3 class="text-2xl font-bold text-slate-900 mb-3">Accessibility</h3>
+                    <p class="text-slate-600">
+                        We make tech education accessible to everyone through online learning and affordable programs.
+                    </p>
+                </div>
+                
+                <!-- Value 5 -->
+                <div class="value-card bg-gradient-to-br from-blue-50 to-cyan-50 p-8 rounded-2xl shadow-md">
+                    <div class="text-5xl mb-4">⚡</div>
+                    <h3 class="text-2xl font-bold text-slate-900 mb-3">Practical Skills</h3>
+                    <p class="text-slate-600">
+                        We focus on hands-on, project-based learning that prepares students for real-world challenges.
+                    </p>
+                </div>
+                
+                <!-- Value 6 -->
+                <div class="value-card bg-gradient-to-br from-purple-50 to-pink-50 p-8 rounded-2xl shadow-md">
+                    <div class="text-5xl mb-4">🚀</div>
+                    <h3 class="text-2xl font-bold text-slate-900 mb-3">Empowerment</h3>
+                    <p class="text-slate-600">
+                        We give young people the confidence, skills, and mindset to build successful tech careers.
+                    </p>
+                </div>
+                
+            </div>
+        </div>
+    </section>
+    
+    <!-- What Makes Us Different -->
+    <section class="py-20 bg-slate-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            
+            <div class="text-center mb-16">
+                <h2 class="text-4xl md:text-5xl font-bold text-slate-900 mb-4">
+                    What Makes Us Different
+                </h2>
+                <p class="text-xl text-slate-600">
+                    Why students choose Websprout Hub over other platforms
+                </p>
+            </div>
+            
+            <div class="grid md:grid-cols-2 gap-8">
+                
+                <div class="bg-white p-8 rounded-2xl shadow-lg">
+                    <div class="flex items-start gap-4">
+                        <div class="text-4xl">✓</div>
+                        <div>
+                            <h3 class="text-2xl font-bold text-slate-900 mb-2">Youth-Focused Approach</h3>
+                            <p class="text-slate-600">
+                                Our courses are specifically designed for young people, with relatable examples, modern teaching methods, and peer learning.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="bg-white p-8 rounded-2xl shadow-lg">
+                    <div class="flex items-start gap-4">
+                        <div class="text-4xl">✓</div>
+                        <div>
+                            <h3 class="text-2xl font-bold text-slate-900 mb-2">Nigerian Context</h3>
+                            <p class="text-slate-600">
+                                We understand the local job market and teach skills that are actually in demand in Nigeria and across Africa.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="bg-white p-8 rounded-2xl shadow-lg">
+                    <div class="flex items-start gap-4">
+                        <div class="text-4xl">✓</div>
+                        <div>
+                            <h3 class="text-2xl font-bold text-slate-900 mb-2">Hands-On Projects</h3>
+                            <p class="text-slate-600">
+                                Every course includes real-world projects you can add to your portfolio and show to potential employers or clients.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="bg-white p-8 rounded-2xl shadow-lg">
+                    <div class="flex items-start gap-4">
+                        <div class="text-4xl">✓</div>
+                        <div>
+                            <h3 class="text-2xl font-bold text-slate-900 mb-2">Career Support</h3>
+                            <p class="text-slate-600">
+                                We don't just teach—we help you find opportunities, build your portfolio, and connect with potential employers.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+    </section>
+    
+    <!-- Location & Contact Section -->
+    <section class="py-20 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            
+            <div class="text-center mb-16">
+                <h2 class="text-4xl md:text-5xl font-bold text-slate-900 mb-4">
+                    Get In Touch
+                </h2>
+                <p class="text-xl text-slate-600">
+                    We'd love to hear from you and answer any questions
+                </p>
+            </div>
+            
+            <div class="grid md:grid-cols-2 gap-12">
+                
+                <!-- Contact Information -->
+                <div class="space-y-6">
+                    
+                    <div class="flex items-start gap-4">
+                        <div class="flex-shrink-0 w-12 h-12 bg-indigo-100 text-indigo-600 rounded-lg flex items-center justify-center text-xl">
+                            📧
+                        </div>
+                        <div>
+                            <h3 class="font-bold text-slate-900 mb-1">Email</h3>
+                            <a href="mailto:limscobeauty18@gmail.com" class="text-indigo-600 hover:text-indigo-700">
+                                limscobeauty18@gmail.com
+                            </a>
+                        </div>
+                    </div>
+                    
+                    <div class="flex items-start gap-4">
+                        <div class="flex-shrink-0 w-12 h-12 bg-green-100 text-green-600 rounded-lg flex items-center justify-center text-xl">
+                            📱
+                        </div>
+                        <div>
+                            <h3 class="font-bold text-slate-900 mb-1">Phone / WhatsApp</h3>
+                            <p class="text-slate-600">+234 704 911 1844</p>
+                            <p class="text-slate-600">+234 901 441 3890</p>
+                        </div>
+                    </div>
+                    
+                    <div class="flex items-start gap-4">
+                        <div class="flex-shrink-0 w-12 h-12 bg-purple-100 text-purple-600 rounded-lg flex items-center justify-center text-xl">
+                            📍
+                        </div>
+                        <div>
+                            <h3 class="font-bold text-slate-900 mb-1">Location</h3>
+                            <p class="text-slate-600">Online (Remote)</p>
+                            <p class="text-slate-600">Kaduna State, Nigeria</p>
+                        </div>
+                    </div>
+                    
+                    <div class="pt-6">
+                        <h3 class="font-bold text-slate-900 mb-4">Follow Us on Social Media</h3>
+                        <div class="flex gap-4">
+                            <a href="https://t.me/+3Xu_nkU9FkRkYWE0" target="_blank" class="w-12 h-12 bg-blue-500 text-white rounded-lg flex items-center justify-center hover:bg-blue-600 transition text-xl">
+                                💬
+                            </a>
+                            <a href="https://instagram.com/misspoet_18" target="_blank" class="w-12 h-12 bg-pink-500 text-white rounded-lg flex items-center justify-center hover:bg-pink-600 transition text-xl">
+                                📷
+                            </a>
+                            <a href="https://youtube.com/@misspoet_18" target="_blank" class="w-12 h-12 bg-red-500 text-white rounded-lg flex items-center justify-center hover:bg-red-600 transition text-xl">
+                                🎥
+                            </a>
+                        </div>
+                    </div>
+                    
+                </div>
+                
+                <!-- Call to Action -->
+                <div class="bg-gradient-to-br from-indigo-600 to-purple-600 p-8 rounded-2xl text-white">
+                    <h3 class="text-3xl font-bold mb-4">Ready to Start Learning?</h3>
+                    <p class="text-white/90 mb-6 text-lg">
+                        Join our vibrant community of young tech enthusiasts and start building your digital future today.
+                    </p>
+                    
+                    <div class="space-y-4">
+                        <a href="register.html" class="block w-full text-center bg-white text-indigo-600 px-6 py-4 rounded-lg font-bold text-lg hover:shadow-xl transition">
+                            Register for a Course
+                        </a>
+                        
+                        <a href="https://t.me/+3Xu_nkU9FkRkYWE0" target="_blank" class="block w-full text-center bg-white/10 backdrop-blur-sm border-2 border-white text-white px-6 py-4 rounded-lg font-bold text-lg hover:bg-white/20 transition">
+                            Join Our Community
+                        </a>
+                    </div>
+                    
+                    <div class="mt-8 pt-8 border-t border-white/20">
+                        <p class="text-sm text-white/80">
+                            Have questions? Our team responds to all inquiries within 24 hours. Feel free to reach out via email, WhatsApp, or Telegram!
+                        </p>
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+    </section>
+    
+    <!-- Footer -->
+    <footer class="bg-slate-900 text-white py-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid md:grid-cols-4 gap-8">
+                <div>
+                    <h4 class="text-xl font-bold mb-4">Websprout Hub</h4>
+                    <p class="text-slate-400">Empowering youths with practical tech and AI skills for the digital future.</p>
+                </div>
+                
+                <div>
+                    <h4 class="text-xl font-bold mb-4">Quick Links</h4>
+                    <ul class="space-y-2">
+                        <li><a href="index.html" class="text-slate-400 hover:text-white transition">Home</a></li>
+                        <li><a href="courses.html" class="text-slate-400 hover:text-white transition">Courses</a></li>
+                        <li><a href="about.html" class="text-slate-400 hover:text-white transition">About Us</a></li>
+                        <li><a href="certificate.html" class="text-slate-400 hover:text-white transition">Certificates</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h4 class="text-xl font-bold mb-4">Contact Us</h4>
+                    <ul class="space-y-2 text-slate-400">
+                        <li>📧 limscobeauty18@gmail.com</li>
+                        <li>📱 +234 704 911 1844</li>
+                        <li>📱 +234 901 441 3890</li>
+                        <li>📍 Online (Remote)</li>
+                        <li>Kaduna State, Nigeria</li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h4 class="text-xl font-bold mb-4">Follow Us</h4>
+                    <ul class="space-y-2">
+                        <li><a href="https://t.me/+3Xu_nkU9FkRkYWE0" target="_blank" class="text-slate-400 hover:text-white transition">💬 Telegram Community</a></li>
+                        <li><a href="https://instagram.com/misspoet_18" target="_blank" class="text-slate-400 hover:text-white transition">📷 Instagram: @misspoet_18</a></li>
+                        <li><a href="https://youtube.com/@misspoet_18" target="_blank" class="text-slate-400 hover:text-white transition">🎥 YouTube: misspoet_18</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="border-t border-slate-800 mt-8 pt-8 text-center text-slate-400">
+                <p>&copy; 2024 Websprout Hub. All rights reserved. Made with 💜 for Nigerian Youth.</p>
+            </div>
+        </div>
+    </footer>
+    
+    <!-- JavaScript -->
+    <script>
+        // Mobile Menu Toggle
+        const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+        const mobileMenu = document.getElementById('mobileMenu');
+        
+        mobileMenuBtn.addEventListener('click', () => {
+            mobileMenu.classList.toggle('active');
+        });
+        
+        // Close mobile menu when clicking a link
+        const mobileLinks = mobileMenu.querySelectorAll('a');
+        mobileLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                mobileMenu.classList.remove('active');
+            });
+        });
+    </script>
+</body>
+</html>

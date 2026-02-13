@@ -1,0 +1,511 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Our Courses - Websprout Hub</title>
+    
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700;800&family=Syne:wght@600;700;800&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --primary: #6366f1;
+            --primary-dark: #4f46e5;
+            --secondary: #ec4899;
+            --accent: #10b981;
+            --dark: #0f172a;
+            --light: #f1f5f9;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Outfit', sans-serif;
+            overflow-x: hidden;
+        }
+        
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Syne', sans-serif;
+        }
+        
+        html {
+            scroll-behavior: smooth;
+        }
+        
+        /* Navigation Styles */
+        nav {
+            backdrop-filter: blur(10px);
+            background: rgba(15, 23, 42, 0.95);
+        }
+        
+        .nav-link {
+            position: relative;
+            transition: color 0.3s ease;
+        }
+        
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--secondary);
+            transition: width 0.3s ease;
+        }
+        
+        .nav-link:hover::after {
+            width: 100%;
+        }
+        
+        /* Button Styles */
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .btn-primary::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, var(--secondary), var(--primary));
+            transition: left 0.3s ease;
+        }
+        
+        .btn-primary:hover::before {
+            left: 0;
+        }
+        
+        .btn-primary span {
+            position: relative;
+            z-index: 1;
+        }
+        
+        /* Course Card Styles */
+        .course-card {
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .course-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, rgba(99, 102, 241, 0.1), rgba(236, 72, 153, 0.1));
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        
+        .course-card:hover::before {
+            opacity: 1;
+        }
+        
+        .course-card:hover {
+            transform: translateY(-12px);
+            box-shadow: 0 25px 50px rgba(99, 102, 241, 0.3);
+        }
+        
+        /* Mobile Menu */
+        .mobile-menu {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+        }
+        
+        .mobile-menu.active {
+            max-height: 500px;
+        }
+        
+        /* Fade In Animation */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(30px);
+            animation: fadeInUp 0.8s ease forwards;
+        }
+        
+        @keyframes fadeInUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .delay-1 { animation-delay: 0.1s; }
+        .delay-2 { animation-delay: 0.2s; }
+        .delay-3 { animation-delay: 0.3s; }
+        
+        /* Filter Buttons */
+        .filter-btn {
+            transition: all 0.3s ease;
+        }
+        
+        .filter-btn.active {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+        }
+        
+        /* Course Icon Animation */
+        .course-icon {
+            transition: transform 0.3s ease;
+        }
+        
+        .course-card:hover .course-icon {
+            transform: scale(1.2) rotate(10deg);
+        }
+    </style>
+</head>
+<body class="bg-slate-50">
+    
+    <!-- Navigation Bar -->
+    <nav class="fixed w-full top-0 z-50 shadow-lg">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex items-center">
+                    <a href="index.html" class="flex items-center space-x-2">
+                        <div class="w-10 h-10 bg-gradient-to-br from-indigo-500 to-pink-500 rounded-lg flex items-center justify-center">
+                            <span class="text-white font-bold text-xl">W</span>
+                        </div>
+                        <span class="text-white font-bold text-xl hidden sm:block">Websprout Hub</span>
+                    </a>
+                </div>
+                
+                <div class="hidden md:flex space-x-8">
+                    <a href="index.html" class="nav-link text-white font-medium">Home</a>
+                    <a href="courses.html" class="nav-link text-white font-medium">Courses</a>
+                    <a href="about.html" class="nav-link text-white font-medium">About</a>
+                    <a href="certificate.html" class="nav-link text-white font-medium">Certificates</a>
+                    <a href="register.html" class="btn-primary px-6 py-2 rounded-full text-white font-semibold">
+                        <span>Register Now</span>
+                    </a>
+                </div>
+                
+                <button id="mobileMenuBtn" class="md:hidden text-white focus:outline-none">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                    </svg>
+                </button>
+            </div>
+            
+            <div id="mobileMenu" class="mobile-menu md:hidden">
+                <div class="px-2 pt-2 pb-3 space-y-1">
+                    <a href="index.html" class="block px-3 py-2 text-white hover:bg-slate-700 rounded-md">Home</a>
+                    <a href="courses.html" class="block px-3 py-2 text-white hover:bg-slate-700 rounded-md">Courses</a>
+                    <a href="about.html" class="block px-3 py-2 text-white hover:bg-slate-700 rounded-md">About</a>
+                    <a href="certificate.html" class="block px-3 py-2 text-white hover:bg-slate-700 rounded-md">Certificates</a>
+                    <a href="register.html" class="block px-3 py-2 bg-pink-500 text-white rounded-md text-center font-semibold">Register Now</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+    
+    <!-- Hero Section -->
+    <section class="pt-32 pb-16 bg-gradient-to-br from-indigo-600 via-purple-600 to-pink-500">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <div class="fade-in delay-1">
+                <h1 class="text-5xl md:text-6xl font-bold text-white mb-6">
+                    Explore Our Courses
+                </h1>
+                <p class="text-xl md:text-2xl text-white/90 max-w-3xl mx-auto">
+                    Choose from 10 industry-relevant courses designed to make you job-ready in today's digital economy
+                </p>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Courses Grid Section -->
+    <section class="py-20 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            
+            <!-- All Courses -->
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8" id="courseGrid">
+                
+                <!-- Course 1: Web Development -->
+                <div class="course-card bg-white rounded-2xl shadow-lg overflow-hidden border-2 border-transparent hover:border-indigo-500">
+                    <div class="p-8">
+                        <div class="course-icon text-6xl mb-4">💻</div>
+                        <h3 class="text-2xl font-bold text-slate-900 mb-3">Web Development</h3>
+                        <p class="text-slate-600 mb-6">
+                            Learn to build responsive, modern websites using HTML5, CSS3, JavaScript, and popular frameworks. Create stunning web applications from scratch.
+                        </p>
+                        <div class="flex flex-wrap gap-2 mb-6">
+                            <span class="bg-indigo-100 text-indigo-700 px-3 py-1 rounded-full text-sm font-medium">HTML/CSS</span>
+                            <span class="bg-indigo-100 text-indigo-700 px-3 py-1 rounded-full text-sm font-medium">JavaScript</span>
+                            <span class="bg-indigo-100 text-indigo-700 px-3 py-1 rounded-full text-sm font-medium">React</span>
+                        </div>
+                        <a href="register.html" class="inline-block w-full text-center bg-indigo-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-indigo-700 transition">
+                            Enroll Now
+                        </a>
+                    </div>
+                </div>
+                
+                <!-- Course 2: Cyber Security -->
+                <div class="course-card bg-white rounded-2xl shadow-lg overflow-hidden border-2 border-transparent hover:border-red-500">
+                    <div class="p-8">
+                        <div class="course-icon text-6xl mb-4">🔒</div>
+                        <h3 class="text-2xl font-bold text-slate-900 mb-3">Cyber Security</h3>
+                        <p class="text-slate-600 mb-6">
+                            Protect systems and data from cyber threats. Learn ethical hacking, network security, encryption, and how to safeguard digital assets.
+                        </p>
+                        <div class="flex flex-wrap gap-2 mb-6">
+                            <span class="bg-red-100 text-red-700 px-3 py-1 rounded-full text-sm font-medium">Ethical Hacking</span>
+                            <span class="bg-red-100 text-red-700 px-3 py-1 rounded-full text-sm font-medium">Security</span>
+                        </div>
+                        <a href="register.html" class="inline-block w-full text-center bg-red-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-red-700 transition">
+                            Enroll Now
+                        </a>
+                    </div>
+                </div>
+                
+                <!-- Course 3: Graphic Design -->
+                <div class="course-card bg-white rounded-2xl shadow-lg overflow-hidden border-2 border-transparent hover:border-purple-500">
+                    <div class="p-8">
+                        <div class="course-icon text-6xl mb-4">🎨</div>
+                        <h3 class="text-2xl font-bold text-slate-900 mb-3">Graphic Design</h3>
+                        <p class="text-slate-600 mb-6">
+                            Master visual communication with Adobe Creative Suite. Design logos, posters, social media graphics, and build a professional portfolio.
+                        </p>
+                        <div class="flex flex-wrap gap-2 mb-6">
+                            <span class="bg-purple-100 text-purple-700 px-3 py-1 rounded-full text-sm font-medium">Photoshop</span>
+                            <span class="bg-purple-100 text-purple-700 px-3 py-1 rounded-full text-sm font-medium">Illustrator</span>
+                        </div>
+                        <a href="register.html" class="inline-block w-full text-center bg-purple-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-purple-700 transition">
+                            Enroll Now
+                        </a>
+                    </div>
+                </div>
+                
+                <!-- Course 4: AI Tools -->
+                <div class="course-card bg-white rounded-2xl shadow-lg overflow-hidden border-2 border-transparent hover:border-pink-500">
+                    <div class="p-8">
+                        <div class="course-icon text-6xl mb-4">🤖</div>
+                        <h3 class="text-2xl font-bold text-slate-900 mb-3">AI Tools</h3>
+                        <p class="text-slate-600 mb-6">
+                            Harness artificial intelligence for content creation, automation, and productivity. Learn ChatGPT, Midjourney, and other cutting-edge AI tools.
+                        </p>
+                        <div class="flex flex-wrap gap-2 mb-6">
+                            <span class="bg-pink-100 text-pink-700 px-3 py-1 rounded-full text-sm font-medium">ChatGPT</span>
+                            <span class="bg-pink-100 text-pink-700 px-3 py-1 rounded-full text-sm font-medium">AI Art</span>
+                        </div>
+                        <a href="register.html" class="inline-block w-full text-center bg-pink-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-pink-700 transition">
+                            Enroll Now
+                        </a>
+                    </div>
+                </div>
+                
+                <!-- Course 5: Data Analytics -->
+                <div class="course-card bg-white rounded-2xl shadow-lg overflow-hidden border-2 border-transparent hover:border-blue-500">
+                    <div class="p-8">
+                        <div class="course-icon text-6xl mb-4">📊</div>
+                        <h3 class="text-2xl font-bold text-slate-900 mb-3">Data Analytics</h3>
+                        <p class="text-slate-600 mb-6">
+                            Turn raw data into actionable insights. Master Excel, SQL, Power BI, and data visualization to make data-driven decisions.
+                        </p>
+                        <div class="flex flex-wrap gap-2 mb-6">
+                            <span class="bg-blue-100 text-blue-700 px-3 py-1 rounded-full text-sm font-medium">Excel</span>
+                            <span class="bg-blue-100 text-blue-700 px-3 py-1 rounded-full text-sm font-medium">Power BI</span>
+                        </div>
+                        <a href="register.html" class="inline-block w-full text-center bg-blue-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-blue-700 transition">
+                            Enroll Now
+                        </a>
+                    </div>
+                </div>
+                
+                <!-- Course 6: Content Creation -->
+                <div class="course-card bg-white rounded-2xl shadow-lg overflow-hidden border-2 border-transparent hover:border-yellow-500">
+                    <div class="p-8">
+                        <div class="course-icon text-6xl mb-4">📹</div>
+                        <h3 class="text-2xl font-bold text-slate-900 mb-3">Content Creation</h3>
+                        <p class="text-slate-600 mb-6">
+                            Create engaging videos, photos, and multimedia content. Learn video editing, photography, storytelling, and content strategy.
+                        </p>
+                        <div class="flex flex-wrap gap-2 mb-6">
+                            <span class="bg-yellow-100 text-yellow-700 px-3 py-1 rounded-full text-sm font-medium">Video Editing</span>
+                            <span class="bg-yellow-100 text-yellow-700 px-3 py-1 rounded-full text-sm font-medium">Storytelling</span>
+                        </div>
+                        <a href="register.html" class="inline-block w-full text-center bg-yellow-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-yellow-700 transition">
+                            Enroll Now
+                        </a>
+                    </div>
+                </div>
+                
+                <!-- Course 7: UI/UX Design -->
+                <div class="course-card bg-white rounded-2xl shadow-lg overflow-hidden border-2 border-transparent hover:border-green-500">
+                    <div class="p-8">
+                        <div class="course-icon text-6xl mb-4">🎯</div>
+                        <h3 class="text-2xl font-bold text-slate-900 mb-3">UI/UX Design</h3>
+                        <p class="text-slate-600 mb-6">
+                            Design user-friendly interfaces and experiences. Learn Figma, user research, wireframing, prototyping, and design thinking.
+                        </p>
+                        <div class="flex flex-wrap gap-2 mb-6">
+                            <span class="bg-green-100 text-green-700 px-3 py-1 rounded-full text-sm font-medium">Figma</span>
+                            <span class="bg-green-100 text-green-700 px-3 py-1 rounded-full text-sm font-medium">Prototyping</span>
+                        </div>
+                        <a href="register.html" class="inline-block w-full text-center bg-green-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-green-700 transition">
+                            Enroll Now
+                        </a>
+                    </div>
+                </div>
+                
+                <!-- Course 8: Digital Marketing -->
+                <div class="course-card bg-white rounded-2xl shadow-lg overflow-hidden border-2 border-transparent hover:border-orange-500">
+                    <div class="p-8">
+                        <div class="course-icon text-6xl mb-4">📱</div>
+                        <h3 class="text-2xl font-bold text-slate-900 mb-3">Digital Marketing</h3>
+                        <p class="text-slate-600 mb-6">
+                            Promote brands online effectively. Master SEO, social media advertising, email marketing, Google Ads, and conversion optimization.
+                        </p>
+                        <div class="flex flex-wrap gap-2 mb-6">
+                            <span class="bg-orange-100 text-orange-700 px-3 py-1 rounded-full text-sm font-medium">SEO</span>
+                            <span class="bg-orange-100 text-orange-700 px-3 py-1 rounded-full text-sm font-medium">Ads</span>
+                        </div>
+                        <a href="register.html" class="inline-block w-full text-center bg-orange-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-orange-700 transition">
+                            Enroll Now
+                        </a>
+                    </div>
+                </div>
+                
+                <!-- Course 9: Freelancing -->
+                <div class="course-card bg-white rounded-2xl shadow-lg overflow-hidden border-2 border-transparent hover:border-teal-500">
+                    <div class="p-8">
+                        <div class="course-icon text-6xl mb-4">💼</div>
+                        <h3 class="text-2xl font-bold text-slate-900 mb-3">Freelancing</h3>
+                        <p class="text-slate-600 mb-6">
+                            Launch your freelance career successfully. Learn how to find clients, price services, manage projects, and build a sustainable business.
+                        </p>
+                        <div class="flex flex-wrap gap-2 mb-6">
+                            <span class="bg-teal-100 text-teal-700 px-3 py-1 rounded-full text-sm font-medium">Upwork</span>
+                            <span class="bg-teal-100 text-teal-700 px-3 py-1 rounded-full text-sm font-medium">Fiverr</span>
+                        </div>
+                        <a href="register.html" class="inline-block w-full text-center bg-teal-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-teal-700 transition">
+                            Enroll Now
+                        </a>
+                    </div>
+                </div>
+                
+                <!-- Course 10: Social Media Management -->
+                <div class="course-card bg-white rounded-2xl shadow-lg overflow-hidden border-2 border-transparent hover:border-rose-500">
+                    <div class="p-8">
+                        <div class="course-icon text-6xl mb-4">📲</div>
+                        <h3 class="text-2xl font-bold text-slate-900 mb-3">Social Media Management</h3>
+                        <p class="text-slate-600 mb-6">
+                            Manage brand presence across social platforms. Learn content planning, community management, analytics, and social strategy.
+                        </p>
+                        <div class="flex flex-wrap gap-2 mb-6">
+                            <span class="bg-rose-100 text-rose-700 px-3 py-1 rounded-full text-sm font-medium">Instagram</span>
+                            <span class="bg-rose-100 text-rose-700 px-3 py-1 rounded-full text-sm font-medium">Strategy</span>
+                        </div>
+                        <a href="register.html" class="inline-block w-full text-center bg-rose-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-rose-700 transition">
+                            Enroll Now
+                        </a>
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+    </section>
+    
+    <!-- CTA Section -->
+    <section class="py-20 bg-gradient-to-br from-indigo-600 via-purple-600 to-pink-500">
+        <div class="max-w-4xl mx-auto text-center px-4">
+            <h2 class="text-4xl md:text-5xl font-bold text-white mb-6">
+                Can't Decide? We Can Help!
+            </h2>
+            <p class="text-xl text-white/90 mb-8">
+                Join our Telegram community to get guidance on choosing the right course for your goals
+            </p>
+            <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                <a href="https://t.me/+3Xu_nkU9FkRkYWE0" target="_blank" class="inline-block bg-white text-indigo-600 px-8 py-4 rounded-full font-bold text-lg hover:shadow-2xl transition">
+                    Join Community
+                </a>
+                <a href="register.html" class="inline-block bg-pink-500 text-white px-8 py-4 rounded-full font-bold text-lg hover:bg-pink-600 transition">
+                    Register Now
+                </a>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Footer -->
+    <footer class="bg-slate-900 text-white py-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid md:grid-cols-4 gap-8">
+                <div>
+                    <h4 class="text-xl font-bold mb-4">Websprout Hub</h4>
+                    <p class="text-slate-400">Empowering youths with practical tech and AI skills for the digital future.</p>
+                </div>
+                
+                <div>
+                    <h4 class="text-xl font-bold mb-4">Quick Links</h4>
+                    <ul class="space-y-2">
+                        <li><a href="index.html" class="text-slate-400 hover:text-white transition">Home</a></li>
+                        <li><a href="courses.html" class="text-slate-400 hover:text-white transition">Courses</a></li>
+                        <li><a href="about.html" class="text-slate-400 hover:text-white transition">About Us</a></li>
+                        <li><a href="certificate.html" class="text-slate-400 hover:text-white transition">Certificates</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h4 class="text-xl font-bold mb-4">Contact Us</h4>
+                    <ul class="space-y-2 text-slate-400">
+                        <li>📧 limscobeauty18@gmail.com</li>
+                        <li>📱 +234 704 911 1844</li>
+                        <li>📱 +234 901 441 3890</li>
+                        <li>📍 Online (Remote)</li>
+                        <li>Kaduna State, Nigeria</li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h4 class="text-xl font-bold mb-4">Follow Us</h4>
+                    <ul class="space-y-2">
+                        <li><a href="https://t.me/+3Xu_nkU9FkRkYWE0" target="_blank" class="text-slate-400 hover:text-white transition">💬 Telegram Community</a></li>
+                        <li><a href="https://instagram.com/misspoet_18" target="_blank" class="text-slate-400 hover:text-white transition">📷 Instagram: @misspoet_18</a></li>
+                        <li><a href="https://youtube.com/@misspoet_18" target="_blank" class="text-slate-400 hover:text-white transition">🎥 YouTube: misspoet_18</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="border-t border-slate-800 mt-8 pt-8 text-center text-slate-400">
+                <p>&copy; 2024 Websprout Hub. All rights reserved. Made with 💜 for Nigerian Youth.</p>
+            </div>
+        </div>
+    </footer>
+    
+    <!-- JavaScript -->
+    <script>
+        // Mobile Menu Toggle
+        const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+        const mobileMenu = document.getElementById('mobileMenu');
+        
+        mobileMenuBtn.addEventListener('click', () => {
+            mobileMenu.classList.toggle('active');
+        });
+        
+        // Close mobile menu when clicking a link
+        const mobileLinks = mobileMenu.querySelectorAll('a');
+        mobileLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                mobileMenu.classList.remove('active');
+            });
+        });
+    </script>
+</body>
+</html>
